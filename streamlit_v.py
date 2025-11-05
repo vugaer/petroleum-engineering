@@ -6,15 +6,30 @@ st.title("Water Resistivity & Salinity Calculator")
 
 # --- User Inputs ---
 st.header("Input Data")
-sp_log_reading = st.number_input('SP Log Reading (mV)', value=0.0)
-reservoir_temp = st.number_input('Reservoir Temperature (°F)', value=150.0)
-r_mf_x = st.number_input('Mud Filtrate Resistivity R_mf (Ω·m)', value=0.1)
-r_mf_x_temp = st.number_input('Temperature of R_mf (°F)', value=75.0)
 
-# Select electrolyte type
+# SP and Reservoir Temperature in one row
+col1, col2 = st.columns(2)
+with col1:
+    sp_log_reading = st.number_input('SP Log (mV)', value=0.0)
+with col2:
+    reservoir_temp = st.number_input('Reservoir Temp (°F)', value=150.0)
+
+# Mud filtrate resistivity and its temperature in one row with units
+col3, col4, col5, col6 = st.columns([2, 1, 2, 1])
+with col3:
+    r_mf_x = st.number_input('R_mf', value=0.1, format="%.3f")
+with col4:
+    st.write("Ω·m")  # Unit for resistivity
+with col5:
+    r_mf_x_temp = st.number_input('at Temp', value=75.0)
+with col6:
+    st.write("°F")  # Unit for temperature
+
+# Electrolyte selection below
 electrolyte = st.radio(
-    "Select Electrolyte Type for Calculation:",
-    ("NaCl (Default)", "KCl")
+    "Select Electrolyte Type:",
+    ("NaCl (Default)", "KCl"),
+    horizontal=True
 )
 
 
